@@ -3,7 +3,7 @@
 $dbServername = "localhost";
 $dbUsername = "root";
 $dbPassword = "";
-$dbName = "Accounts";
+$dbName = "watch_planet";
 
 $conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
 

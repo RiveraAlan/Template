@@ -1,4 +1,4 @@
- <?php
+<?php
     if (isset($_POST['signup-submit'])) {
         require 'connection.inc.php';
         

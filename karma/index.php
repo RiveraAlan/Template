@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    require 'includes/connection.inc.php';
+?>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
@@ -5,7 +9,7 @@
 	<!-- Mobile Specific Meta -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- Favicon-->
-	<link rel="shortcut icon" href="img/fav.png">
+	<link rel="shortcut icon" href="img/brand/watch_planet_title.ico">
 	<!-- Author Meta -->
 	<meta name="author" content="CodePixar">
 	<!-- Meta Description -->
@@ -40,7 +44,7 @@
 			<nav class="navbar navbar-expand-lg navbar-light main_box">
 				<div class="container">
 					<!-- Brand and toggle get grouped for better mobile display -->
-					<a class="navbar-brand logo_h" href="index.html"><img src="img/brand/watch_planet.png" width="200px" alt=""></a>
+					<a class="navbar-brand logo_h" href="index.php"><img src="img/brand/watch_planet.png" width="200px" alt=""></a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="icon-bar"></span>
@@ -84,8 +88,13 @@
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 								 aria-expanded="false"><i class="fa fa-user-circle" aria-hidden="true"></i></a>
 								<ul class="dropdown-menu" style="background-color: rgba(0, 0, 0, .9);">
-									<li class="nav-item"><a class="nav-link" href="includes/logout.inc.php">Log Out</a></li>
-									<li class="nav-item"><a class="nav-link" href="tracking.html">Account Settings</a></li>
+                                    <?php
+                                    if (isset($_SESSION['id'])){
+									   echo    '<li class="nav-item"><a class="nav-link" href="includes/logout.inc.php">Log Out</a></li>';
+                                        }else {
+									   echo    '<li class="nav-item"><a class="nav-link" href="login.php">Log in</a></li>';
+                                        }
+                                        ?>
 								</ul>
 							</li>
 						</ul>
