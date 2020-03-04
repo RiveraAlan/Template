@@ -19,7 +19,7 @@
 	<!-- meta character set -->
 	<meta charset="UTF-8">
 	<!-- Site Title -->
-	<title>Watch Planet</title>
+	<title>Watch Planet | Home</title>
 	<!--
 		CSS
 		============================================= -->

@@ -1,0 +1,25 @@
+body, html, input, textarea {
+  font-family: arial;
+}
+h1 {
+  padding: 0;
+  margin: 10px 0;
+}
+label {
+  display: block;
+  margin: 5px 0;
+}
+input[type=text], input[type=email], input[type=number], textarea {
+  padding: 5px;
+  display: block;
+  resize: none;
+  min-width: 300px;
+}
+input[type=submit] {
+  background: #AA2020;
+  color: #fff;
+  border: 0;
+  padding: 10px;
+  font-size: 1em;
+  font-weight: bold;
+}

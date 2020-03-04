@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Order Form Example</title>
+    <link href="1b-theme.css" rel="stylesheet">
+  </head>
+  <body>
+    <h1>Order Form</h1>
+    <form method="post" target="_blank" action="2-email.php">
+      <label for="name">Name:</label>
+      <input type="text" name="name" required value="John Doe"/> 
+      <label for="email">Email:</label>
+      <input type="email" name="email" required value="john@doe.com"/> 
+      <label for="tel">Telephone:</label>
+      <input type="text" name="tel" required value="123-456-789"/> 
+      <label for="qty">Quantity Needed:</label>
+      <input type="number" name="qty" required value="1"/> 
+      <label for="notes">Additional Notes (if any):</label>
+      <textarea name="notes"></textarea>
+      <br>
+      <input type="submit" value="Place Order"/>
+    </form>
+  </body>
+</html>
