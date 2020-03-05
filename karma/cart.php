@@ -1,4 +1,8 @@
 <?php
+
+//start session
+session_start();
+
     require_once ('./php/cart.php');
     require_once('./php/cartTesterDB.php');
 ?>
@@ -85,7 +89,22 @@
 							<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
-							<li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>
+							<!-- Header Cart Button -->
+							<li class="nav-item"><a href="cart.php" class="cart"><span class="ti-bag">Cart
+								<?php
+									//if session cart array holds items, display the amount of items stored next to the cart icon
+									if(isset($_SESSION['cart'])){
+										$count = count($_SESSION['cart']);
+										echo "<span>$count</span>";
+									}else{
+										echo "<span>$count</span>";
+									}
+										
+
+								?>
+								
+							</span>
+							</a></li>
 							<li class="nav-item">
 								<button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
 							</li>
@@ -138,6 +157,7 @@
                         </thead>
                         <tbody>
                             <?php 
+                            //use cart item function to insert the items
                             cartItem("product1", 79);
                             cartItem("product2", 59);
                             cartItem("product3", 99);
@@ -175,7 +195,7 @@
                                     <h5>$2160.00</h5>
                                 </td>
                             </tr>
-                            <tr class="shipping_area">
+                            <!-- <tr class="shipping_area">
                                 <td>
 
                                 </td>
@@ -208,7 +228,7 @@
                                         <a class="gray_btn" href="#">Update Details</a>
                                     </div>
                                 </td>
-                            </tr>
+                            </tr> -->
                             <tr class="out_button_area">
                                 <td>
 

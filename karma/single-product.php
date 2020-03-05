@@ -10,7 +10,6 @@ require_once ('./php/single-product.php');
 $productID = 1;
 
 
-
 ?>
 
 <!DOCTYPE html>
@@ -96,7 +95,22 @@ $productID = 1;
 							<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
-							<li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>
+						<!-- Header Cart Button -->
+							<li class="nav-item"><a href="cart.php" class="cart"><span class="ti-bag">Cart
+								<?php
+									//if session cart array holds items, display the amount of items stored next to the cart icon
+									if(isset($_SESSION['cart'])){
+										$count = count($_SESSION['cart']);
+										echo "<span>$count</span>";
+									}else{
+										echo "<span>$count</span>";
+									}
+										
+
+								?>
+								
+							</span>
+							</a></li>
 							<li class="nav-item">
 								<button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
 							</li>
@@ -141,15 +155,14 @@ $productID = 1;
 
 			//moved Single Product Area to function singleItem()
 			//using productID to define a query to get product information
-			$idQuery = "SELECT * FROM `product` WHERE `id` = $productID ";
+			$idQuery = "SELECT * FROM product WHERE id = $productID ";
 			$getProd = mysqli_query($conn, $idQuery);
 			$myProduct = mysqli_fetch_assoc($getProd);
 
-			//single item recieves infomation from database outputs it in website's HTML format
+			//single item retrieves infomation from database outputs it in website's HTML format
 			singleItem($myProduct['name'], $myProduct['price'], $myProduct['category'], $myProduct['description'], $myProduct['image'], $myProduct['id']); 
 
-
-			//testing add to cart button functionality
+			//Adding a product to the cart using a session variable to store an array with all the items added during the session
 			if(isset($_POST['add'])){
 				//print_r($_POST['prodID']);
 				if(isset($_SESSION['cart'])){
@@ -158,12 +171,19 @@ $productID = 1;
 					print_r($item_array_id);
 
 					//print_r($_SESSION['cart']);
-
+					
+					//if product is in session cart array, dont add it again. else add the product to the session cart array
 					if(in_array($_POST['prodID'], $item_array_id)){
-						echo "<script>alert('Product is already added in the cart)</script>";
+						echo "<script>alert('Product is already added in the cart')</script>";
 						echo "<script>window.location = 'single-product.php'</script>";
 					}else{
+						$count = count($_SESSION['cart']); //returns number of elements in array
+						$item_array = array(
+							'prodID' => $_POST['prodID']
+						);
 
+						$_SESSION['cart'][$count] = $item_array;
+						print_r($_SESSION['cart']);
 					}
 				}
 				else{
@@ -177,6 +197,8 @@ $productID = 1;
 				}
 
 			}
+						
+			
 			?>
 		</div>
 	</div>
