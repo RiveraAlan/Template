@@ -2,14 +2,14 @@
 
 
 //receives image, name, and price
-function cartItem($productName, $productPrice){
+function cartItem($productName, $productPrice, $image){
     $cartItem = 
     "
     <tr>
     <td>
         <div class=\"media\">
             <div class=\"d-flex\">
-                <img src=\"img/cart.jpg\" alt=\"\">
+                <img src=\"$image\" alt=\"\" height=\"150\" width=\"auto\">
             </div>
             <div class=\"media-body\">
                 <p>$productName</p>

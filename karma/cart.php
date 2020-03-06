@@ -3,8 +3,22 @@
 //start session
 session_start();
 
-    require_once ('./php/cart.php');
-    require_once('./php/cartTesterDB.php');
+require_once ('./php/cartF.php');
+require_once('./php/cartTesterDB.php');
+
+
+//placeholder array with product id's
+$cartItemsTemp = array(
+    3, 
+    5, 
+    7);
+
+
+//define a query to get product information
+$productQuery = "SELECT * FROM product";
+$productTable = mysqli_query($conn, $productQuery);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -97,7 +111,7 @@ session_start();
 										$count = count($_SESSION['cart']);
 										echo "<span>$count</span>";
 									}else{
-										echo "<span>$count</span>";
+										echo "<span>0</span>";
 									}
 										
 
@@ -157,10 +171,18 @@ session_start();
                         </thead>
                         <tbody>
                             <?php 
+                            
+
                             //use cart item function to insert the items
-                            cartItem("product1", 79);
-                            cartItem("product2", 59);
-                            cartItem("product3", 99);
+                            
+                            while ($row = mysqli_fetch_assoc($productTable))
+						    {
+                                foreach ($cartItemsTemp as $currentID){
+                                    if ($currentID == $row['id']){
+                                        cartItem($row['name'], $row['price'], $row['image']);
+                                    }
+                                }
+						    }
                             ?>
                             
                             <tr class="bottom_button">
@@ -174,11 +196,11 @@ session_start();
 
                                 </td>
                                 <td>
-                                    <div class="cupon_text d-flex align-items-center">
+                                    <!-- <div class="cupon_text d-flex align-items-center">
                                         <input type="text" placeholder="Coupon Code">
                                         <a class="primary-btn" href="#">Apply</a>
                                         <a class="gray_btn" href="#">Close Coupon</a>
-                                    </div>
+                                    </div> -->
                                 </td>
                             </tr>
                             <tr>

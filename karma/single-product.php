@@ -4,7 +4,7 @@
 session_start();
 
 require_once('./php/cartTesterDB.php');
-require_once ('./php/single-product.php');
+require_once ('./php/single-productF.php');
 
 //placeholder ID
 $productID = 1;
@@ -103,7 +103,7 @@ $productID = 1;
 										$count = count($_SESSION['cart']);
 										echo "<span>$count</span>";
 									}else{
-										echo "<span>$count</span>";
+										echo "<span>0</span>";
 									}
 										
 
