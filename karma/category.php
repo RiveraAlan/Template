@@ -330,12 +330,9 @@ $productTable = mysqli_query($conn, $productQuery);
 						<?php
 						while ($row = mysqli_fetch_assoc($productTable))
 						{
-							getCatgElement($row['name'], $row['image'], $row['price']);
+							getCatgElement($row['name'], $row['image'], $row['price'], $row['id']);
 
 						}
-
-
-
 						?>
 
 						<!-- <div class="col-lg-4 col-md-6">
@@ -374,6 +371,19 @@ $productTable = mysqli_query($conn, $productQuery);
 						
 					</div>
 				</section>
+
+
+				<?php
+						//getting id of product clicked
+						if(isset($_POST['thisProd'])){
+							$currentID = $_POST['prodID'];
+							echo "<script>alert('ID of Product Clicked: $currentID')</script>";
+							$_SESSION['clickID'] = $currentID;
+							echo "<script>window.location = 'single-product.php'</script>";
+						}
+
+
+				?>
 				<!-- End Best Seller -->
 				<!-- Start Filter Bar -->
 				<div class="filter-bar d-flex flex-wrap align-items-center">

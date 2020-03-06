@@ -1,10 +1,11 @@
 <?php
 
-function getCatgElement($name, $image, $price){
+function getCatgElement($name, $image, $price, $id){
     $inflation = $price + ($price * .2);
 
     $catgElement = "
-    <div class=\"col-lg-4 col-md-6\" onclick=\"location.href='#';\" style=\"cursor: pointer;\">
+    <form action=\"category.php\" method=\"post\">
+        <button class=\"col-lg-4 col-md-6\" name=\"thisProd\" type=\"submit\">
 							<div class=\"single-product\">
 								<img src=\"$image\" alt=\"\" height=\"300\" width=\"250\">
 								<div class=\"product-details\">
@@ -16,8 +17,9 @@ function getCatgElement($name, $image, $price){
 									
 								</div>
 							</div>
-						</div>
-    
+						</button>
+                        <input type=\"hidden\" name=\"prodID\" value='$id'>
+            </form>
     ";
 
     echo $catgElement;
