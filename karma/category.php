@@ -74,10 +74,10 @@ $productTable = mysqli_query($conn, $productQuery);
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 								 aria-expanded="false">Shop</a>
 								<ul class="dropdown-menu">
-									<li class="nav-item active"><a class="nav-link" href="category.html">Shop Category</a></li>
-									<li class="nav-item"><a class="nav-link" href="single-product.html">Product Details</a></li>
-									<li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a></li>
-									<li class="nav-item"><a class="nav-link" href="cart.html">Shopping Cart</a></li>
+									<li class="nav-item active"><a class="nav-link" href="category.php">Shop Category</a></li>
+									<li class="nav-item"><a class="nav-link" href="single-product.php">Product Details</a></li>
+									<li class="nav-item"><a class="nav-link" href="checkout.php">Product Checkout</a></li>
+									<li class="nav-item"><a class="nav-link" href="cart.php">Shopping Cart</a></li>
 									<li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a></li>
 								</ul>
 							</li>
@@ -101,7 +101,22 @@ $productTable = mysqli_query($conn, $productQuery);
 							<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
-							<li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>
+							<!-- Header Cart Button -->
+							<li class="nav-item"><a href="cart.php" class="cart"><span class="ti-bag">Cart
+								<?php
+									//if session cart array holds items, display the amount of items stored next to the cart icon
+									if(isset($_SESSION['cart'])){
+										$count = count($_SESSION['cart']);
+										echo "<span>$count</span>";
+									}else{
+										echo "<span>0</span>";
+									}
+										
+
+								?>
+								
+							</span>
+							</a></li>
 							<li class="nav-item">
 								<button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
 							</li>

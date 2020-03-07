@@ -7,7 +7,7 @@ require_once('./php/cartTesterDB.php');
 require_once ('./php/single-productF.php');
 
 //placeholder ID
-$productID = 1;
+$productID = $_SESSION['clickID'];
 
 
 ?>
@@ -68,10 +68,10 @@ $productID = 1;
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 								 aria-expanded="false">Shop</a>
 								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="category.html">Shop Category</a></li>
-									<li class="nav-item active"><a class="nav-link" href="single-product.html">Product Details</a></li>
-									<li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a></li>
-									<li class="nav-item"><a class="nav-link" href="cart.html">Shopping Cart</a></li>
+									<li class="nav-item"><a class="nav-link" href="category.php">Shop Category</a></li>
+									<li class="nav-item active"><a class="nav-link" href="single-product.php">Product Details</a></li>
+									<li class="nav-item"><a class="nav-link" href="checkout.php">Product Checkout</a></li>
+									<li class="nav-item"><a class="nav-link" href="cart.php">Shopping Cart</a></li>
 									<li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a></li>
 								</ul>
 							</li>
@@ -184,6 +184,7 @@ $productID = 1;
 
 						$_SESSION['cart'][$count] = $item_array;
 						print_r($_SESSION['cart']);
+						echo "<script>window.location = 'cart.php'</script>";
 					}
 				}
 				else{

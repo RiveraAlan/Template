@@ -8,10 +8,10 @@ require_once('./php/cartTesterDB.php');
 
 
 //placeholder array with product id's
-$cartItemsTemp = array(
-    3, 
-    5, 
-    7);
+// $cartItemsTemp = array(
+//     3, 
+//     5, 
+//     7);
 
 
 //define a query to get product information
@@ -76,10 +76,10 @@ $productTable = mysqli_query($conn, $productQuery);
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 								 aria-expanded="false">Shop</a>
 								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="category.html">Shop Category</a></li>
-									<li class="nav-item"><a class="nav-link" href="single-product.html">Product Details</a></li>
-									<li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a></li>
-									<li class="nav-item active"><a class="nav-link" href="cart.html">Shopping Cart</a></li>
+									<li class="nav-item"><a class="nav-link" href="category.php">Shop Category</a></li>
+									<li class="nav-item"><a class="nav-link" href="single-product.php">Product Details</a></li>
+									<li class="nav-item"><a class="nav-link" href="checkout.php">Product Checkout</a></li>
+									<li class="nav-item active"><a class="nav-link" href="cart.php">Shopping Cart</a></li>
 									<li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a></li>
 								</ul>
 							</li>
@@ -172,17 +172,26 @@ $productTable = mysqli_query($conn, $productQuery);
                         <tbody>
                             <?php 
                             
-
+                            $cartIndex = 0; //stores index for every cart item on session list (used for item removal)
                             //use cart item function to insert the items
-                            
                             while ($row = mysqli_fetch_assoc($productTable))
 						    {
-                                foreach ($cartItemsTemp as $currentID){
+                                foreach (array_column($_SESSION['cart'], "prodID") as $currentID){
                                     if ($currentID == $row['id']){
-                                        cartItem($row['name'], $row['price'], $row['image']);
+                                        cartItem($row['name'], $row['price'], $row['image'], $cartIndex);
+                                        $cartIndex++;
                                     }
                                 }
-						    }
+                            }
+                            
+                            //if remove button is pressed, remove the desired cart item using the stored index
+                            if(isset($_POST['remove'])){
+                                $rmvIndex = $_POST['rmvIndex'];
+                                echo "<script>alert('Removed Shopping Cart Item: $rmvIndex')</script>";
+                                unset($_SESSION['cart'][$rmvIndex]);
+                                $_SESSION['cart'] = array_values($_SESSION['cart']);
+                                echo "<script>window.location = 'cart.php'</script>";
+                            }
                             ?>
                             
                             <tr class="bottom_button">
