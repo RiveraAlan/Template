@@ -7,7 +7,12 @@ require_once('./php/cartTesterDB.php');
 require_once ('./php/single-productF.php');
 
 //placeholder ID
-$productID = $_SESSION['clickID'];
+if(isset($_SESSION['clickID'])){
+	$productID = $_SESSION['clickID'];
+}else{
+	$productID = 0;
+}
+
 
 
 ?>
@@ -192,9 +197,11 @@ $productID = $_SESSION['clickID'];
 						'prodID' => $_POST['prodID']
 					);
 
-					//create new session variable
+					//create new session variables
 					$_SESSION['cart'][0] = $item_array;
 					print_r($_SESSION['cart']);
+					echo "<script>window.location = 'cart.php'</script>";
+
 				}
 
 			}

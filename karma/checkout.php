@@ -1,3 +1,22 @@
+<?php
+
+//start session
+session_start();
+
+require_once('./php/cartTesterDB.php');
+require_once ('./php/checkoutF.php');
+require_once ('./php/cartF.php');
+
+
+//define a query to get product information
+$productQuery = "SELECT * FROM product";
+$productTable = mysqli_query($conn, $productQuery);
+
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
@@ -53,11 +72,11 @@
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 								 aria-expanded="false">Shop</a>
 								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="category.html">Shop Category</a></li>
-									<li class="nav-item"><a class="nav-link" href="single-product.html">Product Details</a></li>
-									<li class="nav-item active"><a class="nav-link" href="checkout.html">Product Checkout</a></li>
-									<li class="nav-item"><a class="nav-link" href="cart.html">Shopping Cart</a></li>
-									<li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a></li>
+									<li class="nav-item"><a class="nav-link" href="category.php">Shop Category</a></li>
+									<li class="nav-item"><a class="nav-link" href="single-product.php">Product Details</a></li>
+									<li class="nav-item active"><a class="nav-link" href="checkout.php">Product Checkout</a></li>
+									<li class="nav-item"><a class="nav-link" href="cart.php">Shopping Cart</a></li>
+									<li class="nav-item"><a class="nav-link" href="confirmation.php">Confirmation</a></li>
 								</ul>
 							</li>
 							<li class="nav-item submenu dropdown">
@@ -80,7 +99,9 @@
 							<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
-							<li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>
+							<li class="nav-item"><a href="cart.php" class="cart"><span class="ti-bag">
+                                <?php cartHeader(); ?>
+                            </span></a></li>
 							<li class="nav-item">
 								<button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
 							</li>
@@ -230,14 +251,25 @@
                             <h2>Your Order</h2>
                             <ul class="list">
                                 <li><a href="#">Product <span>Total</span></a></li>
-                                <li><a href="#">Fresh Blackberry <span class="middle">x 02</span> <span class="last">$720.00</span></a></li>
-                                <li><a href="#">Fresh Tomatoes <span class="middle">x 02</span> <span class="last">$720.00</span></a></li>
-                                <li><a href="#">Fresh Brocoli <span class="middle">x 02</span> <span class="last">$720.00</span></a></li>
+                                <?php
+                                if(isset($_SESSION['cart'])){
+                                while ($row = mysqli_fetch_assoc($productTable))
+                                {
+                                    foreach (array_column($_SESSION['cart'], "prodID") as $currentID){
+                                        if ($currentID == $row['id']){
+                                            checkoutItem($row['name'], $row['price']);
+                                        }
+                                    }
+                                }
+                                }else{
+                                echo "<h5>No items to checkout</h5>";
+                                }
+                                ?>
                             </ul>
                             <ul class="list list_2">
-                                <li><a href="#">Subtotal <span>$2160.00</span></a></li>
-                                <li><a href="#">Shipping <span>Flat rate: $50.00</span></a></li>
-                                <li><a href="#">Total <span>$2210.00</span></a></li>
+                                <li><a href="#">Taxes <span><?php echo $_SESSION['tax'] ?></span></a></li>
+                                <li><a href="#">Shipping <span>FREE</span></a></li>
+                                <li><a href="#">Total <span><?php echo $_SESSION['subtotal'] ?></span></a></li>
                             </ul>
                             <div class="payment_item">
                                 <div class="radion_btn">
