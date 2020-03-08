@@ -1,4 +1,4 @@
-<?php
+ <?php
     if (isset($_POST['signup-submit'])) {
         require 'connection.inc.php';
         
@@ -7,7 +7,8 @@
         $email = mysqli_real_escape_string($conn, $_POST['email']);
         $pass = mysqli_real_escape_string($conn, $_POST['pass']);
         $pass_confirm = mysqli_real_escape_string($conn, $_POST['pass_confirm']);
-        
+        $status = mysqli_real_escape_string($conn, 'active');
+
         if (!filter_var($email, FILTER_VALIDATE_EMAIL) && !preg_match("/^[a-zA-Z]*$/", $name) && !preg_match("/^[a-zA-Z]*$/", $last_name)) {
             header("Location: ../register.php?error=invalidinputs");
             exit();
@@ -29,7 +30,7 @@
             exit();
         }
         else {
-            $sql = "SELECT name, last_name, email FROM users WHERE email=?;";
+            $sql = "SELECT email FROM users WHERE email=?;";
             $stmt = mysqli_stmt_init($conn);
             if (!mysqli_stmt_prepare($stmt, $sql)) {
                 header("Location: ../register.php?error=sqlerror");
@@ -45,7 +46,7 @@
                     exit();
                 }
                 else {
-                    $sql = "INSERT INTO users (name, last_name, email, pass) VALUES (?, ?, ?, ?);";
+                    $sql = "INSERT INTO users (name, last_name, email, pass, status) VALUES (?, ?, ?, ?, ?);";
                     $stmt = mysqli_stmt_init($conn);
                     if (!mysqli_stmt_prepare($stmt, $sql)) {
                         header("Location: ../register.php?error=sqlerror");
@@ -54,7 +55,7 @@
                     else {
                         $hashedPwd = password_hash($pass, PASSWORD_DEFAULT);
                         
-                        mysqli_stmt_bind_param($stmt, "ssss", $name, $last_name, $email, $hashedPwd);
+                        mysqli_stmt_bind_param($stmt, "sssss", $name, $last_name, $email, $hashedPwd, $status);
                         mysqli_stmt_execute($stmt);
                         header("Location: ../login.php");
                         exit();

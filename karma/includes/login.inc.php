@@ -26,6 +26,10 @@
                         header("Location: ../login.php?error=wrongpassword");
                         exit();
                     }
+                    else if ($row['status'] == "suspended") {
+                        header("Location: ../login.php?error=accountsuspended");
+                        exit();
+                    }
                     else if ($pwdCheck == true) {
                         session_start();
                         $_SESSION['id'] = $row['id'];
@@ -33,10 +37,6 @@
                         $_SESSION['last_name'] = $row['last_name'];
                         
                         header("Location: ../index.php");
-                        exit();
-                    }
-                    else {
-                        header("Location: ../login.php?error=wrongpassword");
                         exit();
                     }
                 }
