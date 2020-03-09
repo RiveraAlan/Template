@@ -1,4 +1,12 @@
 <?php
+//SESSION VARIABLES $_SESSION[]
+// $_SESSION['clickID'] -> Variable that saves ID of product clicked
+// $_SESSION['cart'] -> Array that saves item IDs from database table to be used with cart and checkout
+// $_SESSION['qty'] -> Array that saves quantity of cart items (SHARES INDEX WITH CART ARRAY!!!)
+// $_SESSION['subtotal'] -> Variable that saves cart subtotal
+// $_SESSION['tax'] -> Variable that saves cart tax
+// $_SESSION['total'] -> Variable that saves cart total
+
 
 //start session
 session_start();
@@ -252,24 +260,30 @@ $productTable = mysqli_query($conn, $productQuery);
                             <ul class="list">
                                 <li><a href="#">Product <span>Total</span></a></li>
                                 <?php
+
+                                //fetch all cart items using cart session array
                                 if(isset($_SESSION['cart'])){
-                                while ($row = mysqli_fetch_assoc($productTable))
-                                {
-                                    foreach (array_column($_SESSION['cart'], "prodID") as $currentID){
-                                        if ($currentID == $row['id']){
-                                            checkoutItem($row['name'], $row['price']);
+                                    $cartIndex = 0;
+                                    while ($row = mysqli_fetch_assoc($productTable))
+                                    {
+                                        foreach (array_column($_SESSION['cart'], "prodID") as $currentID){
+                                            if ($currentID == $row['id']){
+                                                checkoutItem($row['name'], $row['price'], $cartIndex);
+                                                $cartIndex++;
+                                            }
                                         }
                                     }
-                                }
                                 }else{
-                                echo "<h5>No items to checkout</h5>";
+                                    echo "<h5>No items to checkout</h5>";
                                 }
                                 ?>
                             </ul>
                             <ul class="list list_2">
-                                <li><a href="#">Taxes <span><?php echo $_SESSION['tax'] ?></span></a></li>
+                            <!-- Display pricing information using session variables -->
+                                <li><a href="#">SubTotal <span>$<?php echo $_SESSION['subtotal'] ?></span></a></li>
+                                <li><a href="#">Taxes <span>$<?php echo $_SESSION['tax'] ?></span></a></li>
                                 <li><a href="#">Shipping <span>FREE</span></a></li>
-                                <li><a href="#">Total <span><?php echo $_SESSION['subtotal'] ?></span></a></li>
+                                <li><a href="#">Total <span>$<?php echo $_SESSION['total'] ?></span></a></li>
                             </ul>
                             <div class="payment_item">
                                 <div class="radion_btn">

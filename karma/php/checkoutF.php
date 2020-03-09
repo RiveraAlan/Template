@@ -1,8 +1,9 @@
 <?php
 
-function checkoutItem($name, $price){
-
-    $item = "<li><a href=\"#\">$name <span class=\"middle\">x 01</span> <span class=\"last\">$$price</span></a></li>";
+function checkoutItem($name, $price, $index){
+    $quantity = (int)$_SESSION['qty'][$index];
+    $qtyPrice = $price * $quantity;
+    $item = "<li><a href=\"#\">$name <span class=\"middle\">x$quantity</span> <span class=\"last\">$$qtyPrice</span></a></li>";
 
     echo $item;
 }

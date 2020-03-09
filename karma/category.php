@@ -1,4 +1,12 @@
 <?php
+//SESSION VARIABLES $_SESSION[]
+// $_SESSION['clickID'] -> Variable that saves ID of product clicked
+// $_SESSION['cart'] -> Array that saves item IDs from database table to be used with cart and checkout
+// $_SESSION['qty'] -> Array that saves quantity of cart items (SHARES INDEX WITH CART ARRAY!!!)
+// $_SESSION['subtotal'] -> Variable that saves cart subtotal
+// $_SESSION['tax'] -> Variable that saves cart tax
+// $_SESSION['total'] -> Variable that saves cart total
+
 
 //start session
 session_start();
@@ -389,7 +397,8 @@ $productTable = mysqli_query($conn, $productQuery);
 
 
 				<?php
-						//getting id of product clicked
+						//Gets the ID of the product clicked and saves it into session
+						//Sends you to product page of product clicked
 						if(isset($_POST['thisProd'])){
 							$currentID = $_POST['prodID'];
 							echo "<script>alert('ID of Product Clicked: $currentID')</script>";

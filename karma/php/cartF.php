@@ -1,7 +1,8 @@
 <?php
 
 //receives image, name, and price
-function cartItem($productName, $productPrice, $image, $index){
+function cartItem($productName, $productPrice, $image, $index, $qty){
+
     $cartItem = 
     "
     <form action=\"cart.php\" method=\"post\">
@@ -14,7 +15,7 @@ function cartItem($productName, $productPrice, $image, $index){
             </div>
             <div class=\"media-body\">
                 <p>$productName</p>
-                <input type=\"hidden\" name=\"rmvIndex\" value='$index'>
+                <input type=\"hidden\" name=\"cartIndex\" value='$index'>
                 <button name=\"remove\" type=\"submit\" class=\"genric-btn danger-border circle\">Remove Item ($index)</button>
             </div>
             
@@ -25,12 +26,10 @@ function cartItem($productName, $productPrice, $image, $index){
     </td>
     <td>
         <div class=\"product_count\">
-            <input type=\"text\" name=\"qty$index\" id=\"sst$index\" maxlength=\"12\" value=\"1\" title=\"Quantity:\"
+            <input type=\"text\" name=\"qty$index\" id=\"sst$index\" maxlength=\"12\" value=\"$qty\" title=\"Quantity:\"
                 class=\"input-text qty\">
-            <button onclick=\"var result = document.getElementById('sst$index'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;\"
-                class=\"increase items-count\" type=\"button\"><i class=\"lnr lnr-chevron-up\"></i></button>
-            <button onclick=\"var result = document.getElementById('sst$index'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 1 ) result.value--;return false;\"
-                class=\"reduced items-count\" type=\"button\"><i class=\"lnr lnr-chevron-down\"></i></button>
+            <button name=\"qty-up\" class=\"increase items-count\" type=\"submit\"><i class=\"lnr lnr-chevron-up\"></i></button>
+            <button name=\"qty-down\" class=\"reduced items-count\" type=\"submit\"><i class=\"lnr lnr-chevron-down\"></i></button>
         </div>
     </td>
     <td>
@@ -52,6 +51,11 @@ function cartHeader(){
     }
 }
 
+
+// <button name=\"qty-up\" onclick=\"var result = document.getElementById('sst$index'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;\"
+//                 class=\"increase items-count\" type=\"button\"><i class=\"lnr lnr-chevron-up\"></i></button>
+//             <button name=\"qty-down\" onclick=\"var result = document.getElementById('sst$index'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 1 ) result.value--;return false;\"
+//                 class=\"reduced items-count\" type=\"button\"><i class=\"lnr lnr-chevron-down\"></i></button>
 ?>
     
 

@@ -1,18 +1,17 @@
 <?php
+//SESSION VARIABLES $_SESSION[]
+// $_SESSION['clickID'] -> Variable that saves ID of product clicked
+// $_SESSION['cart'] -> Array that saves item IDs from database table to be used with cart and checkout
+// $_SESSION['qty'] -> Array that saves quantity for each of the cart items (SHARES INDEX WITH CART ARRAY!!!)
+// $_SESSION['subtotal'] -> Variable that saves cart subtotal to be used in cart and checkout
+// $_SESSION['tax'] -> Variable that saves cart tax to be used in cart and checkout
+// $_SESSION['total'] -> Variable that saves cart total to be used in cart and checkout
 
 //start session
 session_start();
 
 require_once ('./php/cartF.php');
 require_once('./php/cartTesterDB.php');
-
-
-
-//placeholder array with product id's
-// $cartItemsTemp = array(
-//     3, 
-//     5, 
-//     7);
 
 
 //define a query to get product information
@@ -175,15 +174,22 @@ $productTable = mysqli_query($conn, $productQuery);
                             
                             if(isset($_SESSION['cart'])){
                                 $cartIndex = 0; //stores index for every cart item on session list (used for item removal)
-                                //use cart item function to insert the items
-                                $total = 0;
+                                $subtotal = 0; //stores subtotal
+
+                                //fetch all products in our table
                                 while ($row = mysqli_fetch_assoc($productTable))
                                 {
+                                    //fetch all of our ID's stored in our cart array
                                     foreach (array_column($_SESSION['cart'], "prodID") as $currentID){
+                                        //Only display products with ID's in our cart array.
                                         if ($currentID == $row['id']){
-                                            cartItem($row['name'], $row['price'], $row['image'], $cartIndex);
+                                            $price =  (int)$row['price'];
+                                            //fetches item quantity from quantity arrray using the same index of our cart array
+                                            $quantity = (int)$_SESSION['qty'][$cartIndex]; 
+                                            $qtyPrice = $price * $quantity;
+                                            cartItem($row['name'], $qtyPrice, $row['image'], $cartIndex, $quantity);
                                             $cartIndex++;
-                                            $total = $total + (int)$row['price'];
+                                            $subtotal = $subtotal + $qtyPrice;
                                         }
                                     }
                                 }
@@ -192,12 +198,40 @@ $productTable = mysqli_query($conn, $productQuery);
                             }
                             
                             //if remove button is pressed, remove the desired cart item using the stored index
+                            //also affects quantity array
                             if(isset($_POST['remove'])){
-                                $rmvIndex = $_POST['rmvIndex'];
+                                $rmvIndex = $_POST['cartIndex'];
                                 echo "<script>alert('Removed Shopping Cart Item: $rmvIndex')</script>";
                                 unset($_SESSION['cart'][$rmvIndex]);
+                                unset($_SESSION['qty'][$rmvIndex]);
                                 $_SESSION['cart'] = array_values($_SESSION['cart']);
+                                $_SESSION['qty'] = array_values($_SESSION['qty']);
                                 echo "<script>window.location = 'cart.php'</script>";
+                            }
+
+                            //if quantity button is increased, increase the quantity of the item in the cart array
+                            if(isset($_POST['qty-up'])){
+                                $qtyIndex = $_POST['cartIndex'];
+                                echo "<script>alert('Increased Shopping Cart Item: $qtyIndex')</script>";
+                                $currentQty = (int)$_SESSION['qty'][$qtyIndex];
+                                $currentQty++;
+                                $_SESSION['qty'][$qtyIndex] = $currentQty;
+                                echo "<script>window.location = 'cart.php'</script>";
+                            }
+
+                            //if quantity button is decreased, decrease the quantity of the item in the cart array
+                            if(isset($_POST['qty-down'])){
+                                $qtyIndex = $_POST['cartIndex'];
+                                $currentQty = (int)$_SESSION['qty'][$qtyIndex];
+                                if ($currentQty > 1){
+                                    echo "<script>alert('Decreased Shopping Cart Item: $qtyIndex')</script>";
+                                    $currentQty--;
+                                    $_SESSION['qty'][$qtyIndex] = $currentQty;
+                                    echo "<script>window.location = 'cart.php'</script>";
+                                }
+                                else{
+                                    echo "<script>alert('Cannot Decrease Shopping Cart Item: $qtyIndex')</script>";
+                                }
                             }
                             ?>
                             
@@ -206,13 +240,6 @@ $productTable = mysqli_query($conn, $productQuery);
                                     <form action="cart.php" method="post">
                                         <button name="update" type="submit" class="gray_btn">Update Cart</button>
                                     </form>
-                                    <?php
-                                        //if update button is pressed, update all the cart item quantities
-                                        if(isset($_POST['update'])){
-
-                                        }
-
-                                    ?>
                                 </td>
                                 <td>
 
@@ -236,13 +263,31 @@ $productTable = mysqli_query($conn, $productQuery);
 
                                 </td>
                                 <td>
+                                    <h5>SubTotal</h5>
+                                </td>
+                                <td>
+                                    <?php
+                                        //Display and save subtotal in session
+                                        $_SESSION['subtotal'] = $subtotal;
+                                        echo "<h5>$$subtotal</h5>"
+                                    ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
                                     <h5>Taxes (11.5%)</h5>
                                 </td>
                                 <td>
                                     
                                     <?php
                                         //calculate tax and save it to the session
-                                        $tax = $total * .115;
+                                        $tax = $subtotal * .115;
                                         $_SESSION['tax'] = $tax;
                                         echo "<h5>+$$tax</h5>"
                                     ?>
@@ -273,14 +318,14 @@ $productTable = mysqli_query($conn, $productQuery);
 
                                 </td>
                                 <td>
-                                    <h5>Subtotal</h5>
+                                    <h5>Total</h5>
                                 </td>
                                 <td>
                                     <?php
                                         //calculate subtotal and save it to the session
-                                        $subtotal = $total + ($total * .115);
-                                        $_SESSION['subtotal'] = $subtotal;
-                                        echo "<h5>$$subtotal</h5>"
+                                        $total = $subtotal + $tax;
+                                        $_SESSION['total'] = $total;
+                                        echo "<h5>$$total</h5>"
                                     ?>
                                 </td>
                             </tr>

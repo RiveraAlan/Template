@@ -1,4 +1,12 @@
 <?php
+//SESSION VARIABLES $_SESSION[]
+// $_SESSION['clickID'] -> Variable that saves ID of product clicked
+// $_SESSION['cart'] -> Array that saves item IDs from database table to be used with cart and checkout
+// $_SESSION['qty'] -> Array that saves quantity of cart items (SHARES INDEX WITH CART ARRAY!!!)
+// $_SESSION['subtotal'] -> Variable that saves cart subtotal
+// $_SESSION['tax'] -> Variable that saves cart tax
+// $_SESSION['total'] -> Variable that saves cart total
+
 
 //start session
 session_start();
@@ -6,7 +14,7 @@ session_start();
 require_once('./php/cartTesterDB.php');
 require_once ('./php/single-productF.php');
 
-//placeholder ID
+//checks if there was a product ID saved in session, if not use placeholder
 if(isset($_SESSION['clickID'])){
 	$productID = $_SESSION['clickID'];
 }else{
@@ -187,7 +195,14 @@ if(isset($_SESSION['clickID'])){
 							'prodID' => $_POST['prodID']
 						);
 
+						$qty_array = array(
+							'qty' => 1
+						);
+
 						$_SESSION['cart'][$count] = $item_array;
+
+						$_SESSION['qty'][$count] = $qty_array;
+
 						print_r($_SESSION['cart']);
 						echo "<script>window.location = 'cart.php'</script>";
 					}
@@ -197,8 +212,13 @@ if(isset($_SESSION['clickID'])){
 						'prodID' => $_POST['prodID']
 					);
 
+					$qty_array = array(
+						'qty' => 1
+					);
+
 					//create new session variables
 					$_SESSION['cart'][0] = $item_array;
+					$_SESSION['qty'][0] = $qty_array;
 					print_r($_SESSION['cart']);
 					echo "<script>window.location = 'cart.php'</script>";
 
