@@ -15,11 +15,19 @@ require_once('./php/cartTesterDB.php');
 require_once ('./php/single-productF.php');
 
 //checks if there was a product ID saved in session, if not use placeholder
-if(isset($_SESSION['clickID'])){
-	$productID = $_SESSION['clickID'];
+if(isset($_POST['prodSelect'])){
+	$productID = $_POST['prodSelect'];
+	$_SESSION['clickID'] = $_POST['prodSelect'];
 }else{
 	$productID = 0;
 }
+
+// //checks if there was a product ID saved in session, if not use placeholder
+// if(isset($_SESSION['clickID'])){
+// 	$productID = $_SESSION['clickID'];
+// }else{
+// 	$productID = 0;
+// }
 
 
 
@@ -188,7 +196,7 @@ if(isset($_SESSION['clickID'])){
 					//if product is in session cart array, dont add it again. else add the product to the session cart array
 					if(in_array($_POST['prodID'], $item_array_id)){
 						echo "<script>alert('Product is already added in the cart')</script>";
-						echo "<script>window.location = 'single-product.php'</script>";
+						echo "<script>window.location = 'cart.php'</script>";
 					}else{
 						$count = count($_SESSION['cart']); //returns number of elements in array
 						$item_array = array(

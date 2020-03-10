@@ -347,7 +347,7 @@ $productTable = mysqli_query($conn, $productQuery);
 				<!-- Start Best Seller -->
 				<section class="lattest-product-area pb-40 category-list">
 					<div class="row">
-
+						<form action="single-product.php" method="post">
 
 						<!-- Displaying all products with product table -->
 						<?php
@@ -357,6 +357,7 @@ $productTable = mysqli_query($conn, $productQuery);
 
 						}
 						?>
+						</form>
 
 						<!-- <div class="col-lg-4 col-md-6">
 							<div class="single-product">
@@ -399,12 +400,12 @@ $productTable = mysqli_query($conn, $productQuery);
 				<?php
 						//Gets the ID of the product clicked and saves it into session
 						//Sends you to product page of product clicked
-						if(isset($_POST['thisProd'])){
-							$currentID = $_POST['prodID'];
-							echo "<script>alert('ID of Product Clicked: $currentID')</script>";
-							$_SESSION['clickID'] = $currentID;
-							echo "<script>window.location = 'single-product.php'</script>";
-						}
+						// if(isset($_POST['thisProd'])){
+						// 	$currentID = $_POST['prodID'];
+						// 	echo "<script>alert('ID of Product Clicked: $currentID')</script>";
+						// 	$_SESSION['clickID'] = $currentID;
+						// 	echo "<script>window.location = 'single-product.php'</script>";
+						// }
 
 
 				?>
