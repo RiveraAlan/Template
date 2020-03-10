@@ -1,6 +1,8 @@
 <?php
 
-$conn = mysqli_connect("localhost","root","","test");
+
+require './includes/connection.inc.php';
+//$conn = mysqli_connect("localhost","root","","test2");
 
 function getData(){
     $sql = "SELECT * FROM product";

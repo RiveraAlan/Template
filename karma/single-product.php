@@ -176,12 +176,12 @@ if(isset($_POST['prodSelect'])){
 
 			//moved Single Product Area to function singleItem()
 			//using productID to define a query to get product information
-			$idQuery = "SELECT * FROM product WHERE id = $productID ";
+			$idQuery = "SELECT * FROM watches WHERE id = $productID ";
 			$getProd = mysqli_query($conn, $idQuery);
 			$myProduct = mysqli_fetch_assoc($getProd);
 
 			//single item retrieves infomation from database outputs it in website's HTML format
-			singleItem($myProduct['name'], $myProduct['price'], $myProduct['category'], $myProduct['description'], $myProduct['image'], $myProduct['id']); 
+			singleItem($myProduct['name'], $myProduct['price'], $myProduct['material'], $myProduct['description'], $myProduct['image'], $myProduct['id']); 
 
 			//Adding a product to the cart using a session variable to store an array with all the items added during the session
 			if(isset($_POST['add'])){

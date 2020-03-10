@@ -17,7 +17,7 @@ require_once ('./php/cartF.php');
 
 
 //define a query to get product information
-$productQuery = "SELECT * FROM product";
+$productQuery = "SELECT * FROM watches";
 $productTable = mysqli_query($conn, $productQuery);
 
 
