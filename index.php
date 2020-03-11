@@ -79,9 +79,9 @@ $productTable = mysqli_query($conn, $productQuery);
 									//if session cart array holds items, display the amount of items stored next to the cart icon
 									if(isset($_SESSION['cart'])){
 										$count = count($_SESSION['cart']);
-										echo '<span>'.$count.'</span>';
+										echo '<span class="numberCircle" style="color:#000">'.$count.'</span>';
 									}else{
-										echo '<span class="badge badge-pill badge-light">0</span>';
+										echo '<span>0</span>';
 									}
 										
 
@@ -127,7 +127,7 @@ $productTable = mysqli_query($conn, $productQuery);
 							</div>
 							<div class="col-lg-7">
 								<div class="banner-img">
-									<img class="img-fluid" src="https://static.wixstatic.com/media/253395_6e6a4cd0a43247c1875123040a0d5dfe~mv2.png/v1/fill/w_269,h_268,al_c,usm_0.66_1.00_0.01/gold%20lateral%201000x1000.png" alt="">
+									<img style="height:600px" class="img-fluid" src="img/watch-images/Men/Leather/Omega%20Speedmaster.png" alt="">
 								</div>
 							</div>
 						</div>
@@ -196,7 +196,7 @@ $productTable = mysqli_query($conn, $productQuery);
 						<div class="col-lg-8 col-md-8">
 							<div class="single-deal">
 								<div class="overlay"></div>
-								<img class="img-fluid w-100" src="img/category/c1.jpg" alt="">
+								<img class="img-fluid w-100" src="https://static1.fashionbeans.com/wp-content/uploads/2017/10/luxwatches-top-9.jpg" alt="">
 								<a href="img/category/c1.jpg" class="img-pop-up" target="_blank">
 									<div class="deal-details">
 										<h6 class="deal-title">Sneaker for Sports</h6>
@@ -207,7 +207,7 @@ $productTable = mysqli_query($conn, $productQuery);
 						<div class="col-lg-4 col-md-4">
 							<div class="single-deal">
 								<div class="overlay"></div>
-								<img class="img-fluid w-100" src="img/category/c2.jpg" alt="">
+								<img class="img-fluid w-100" src="https://2dmynj28boeo40pq2b3e4yla-wpengine.netdna-ssl.com/wp-content/uploads/2019/06/v1.jpg" alt="">
 								<a href="img/category/c2.jpg" class="img-pop-up" target="_blank">
 									<div class="deal-details">
 										<h6 class="deal-title">Sneaker for Sports</h6>
@@ -218,7 +218,7 @@ $productTable = mysqli_query($conn, $productQuery);
 						<div class="col-lg-4 col-md-4">
 							<div class="single-deal">
 								<div class="overlay"></div>
-								<img class="img-fluid w-100" src="img/category/c3.jpg" alt="">
+								<img class="img-fluid w-100" src="https://cdn.shopify.com/s/files/1/0627/5517/files/secondary2_ba29535d-d021-4a08-9b5c-8a5c903f4c0a.jpg?35312" alt="">
 								<a href="img/category/c3.jpg" class="img-pop-up" target="_blank">
 									<div class="deal-details">
 										<h6 class="deal-title">Product for Couple</h6>
@@ -229,7 +229,7 @@ $productTable = mysqli_query($conn, $productQuery);
 						<div class="col-lg-8 col-md-8">
 							<div class="single-deal">
 								<div class="overlay"></div>
-								<img class="img-fluid w-100" src="img/category/c4.jpg" alt="">
+								<img class="img-fluid w-100" src="https://static1.fashionbeans.com/wp-content/uploads/2019/06/2000-watch-19-top-3.jpg" alt="">
 								<a href="img/category/c4.jpg" class="img-pop-up" target="_blank">
 									<div class="deal-details">
 										<h6 class="deal-title">Sneaker for Sports</h6>
@@ -272,6 +272,7 @@ $productTable = mysqli_query($conn, $productQuery);
 				</div>
 				<div class="row">
                         <!-- single product -->
+<!--                    <form action="single-product.php" method="post">-->
                     <?php
                         $counter = 3;
 						while ($counter != 0)
@@ -291,6 +292,7 @@ $productTable = mysqli_query($conn, $productQuery);
 
 						}
 						?>
+<!--                    </form>-->
                         
 				</div>
 			</div>
